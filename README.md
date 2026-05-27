@@ -56,5 +56,3 @@ npm run dev
 - Use the **Login** page to sign in as a student or mentor.
 - Explore the **Dashboard**, **Academics**, **Calendar**, and **Messages** modules.
 
-## 📐 System Architecture & Diagrams
-Detailed system architecture, including Data Flow Diagrams (DFD), Entity-Relationship (ER) diagrams, and Use Case diagrams, can be found in the `docs/system_design.md` file.
