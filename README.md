@@ -1,201 +1,60 @@
-# USIS System Design & UML Diagrams
+# Unified Student Information System (USIS)
 
-This document contains the architecture and design diagrams for the Unified Student Information System (USIS) as requested.
+USIS is a modern, full-stack educational management web application designed to centralize and streamline student data. Built with a sleek, dark-mode glassmorphism aesthetic, USIS provides students and mentors with an intuitive portal for tracking attendance, managing grades, and facilitating real-time communication.
 
-## 1. Entity-Relationship (ER) Diagram
-```mermaid
-erDiagram
-    USER {
-        ObjectId _id
-        String name
-        String email
-        String password
-        String role
-    }
-    STUDENT {
-        ObjectId mentorId
-        String enrollmentId
-    }
-    MENTOR {
-        String department
-    }
-    ATTENDANCE {
-        ObjectId studentId
-        Date date
-        String subject
-        String status
-    }
-    GRADE {
-        ObjectId studentId
-        String subject
-        Float marks
-        String grade
-    }
-    NOTIFICATION {
-        ObjectId userId
-        String message
-        Boolean isRead
-    }
+## 🌟 Features
 
-    USER ||--|| STUDENT : "inherits if role=student"
-    USER ||--|| MENTOR : "inherits if role=mentor"
-    STUDENT ||--o{ ATTENDANCE : "has"
-    STUDENT ||--o{ GRADE : "receives"
-    USER ||--o{ NOTIFICATION : "receives"
-    MENTOR ||--o{ STUDENT : "advises"
+- **Professional Dashboard:** Interactive analytics using Recharts to visualize attendance and academic performance.
+- **Academic Tracking:** Monitor current courses, GPA trends, completed credits, and class rankings.
+- **Real-Time Chat Engine:** Instant messaging between students and mentors utilizing WebSockets (Socket.io).
+- **Interactive Calendar:** Manage schedules, upcoming exams, assignment deadlines, and mentor meetings.
+- **Smart Alert System:** Automated push notifications and alerts triggered when attendance drops below the 75% threshold.
+- **Secure Authentication:** JWT-based login and registration system with role-based access control (Student, Mentor, Admin).
+- **Premium UI/UX:** Fully responsive interface built with Tailwind CSS, featuring glassmorphism elements, neon accents, and smooth micro-animations.
+
+## 🛠️ Technology Stack
+
+**Frontend:**
+- React (Vite)
+- Tailwind CSS
+- React Router v6
+- Recharts (Data Visualization)
+- Lucide React (Icons)
+- Socket.io-client
+
+**Backend:**
+- Node.js & Express
+- MongoDB (In-Memory Server for Demo)
+- Mongoose
+- Socket.io (WebSockets)
+- JSON Web Token (JWT)
+
+## 🚀 Getting Started
+
+### Prerequisites
+Make sure you have [Node.js](https://nodejs.org/) installed on your machine.
+
+### 1. Backend Setup
+Navigate to the backend directory and start the server:
+```bash
+cd backend
+npm install
+npm run dev
+```
+*Note: The backend automatically spins up an in-memory MongoDB instance, so no local database setup is required.*
+
+### 2. Frontend Setup
+Open a new terminal window, navigate to the frontend directory, and start the Vite dev server:
+```bash
+cd frontend
+npm install
+npm run dev
 ```
 
-## 2. Use Case Diagram
-```mermaid
-flowchart LR
-    Student([Student])
-    Mentor([Mentor])
-    Admin([Admin])
+### 3. Usage
+- Open your browser and navigate to `http://localhost:5173`
+- Use the **Login** page to sign in as a student or mentor.
+- Explore the **Dashboard**, **Academics**, **Calendar**, and **Messages** modules.
 
-    subgraph USIS [Unified Student Information System]
-        UC1(Login / Authentication)
-        UC2(View Dashboard & Analytics)
-        UC3(Manage Attendance)
-        UC4(Manage Grades & Performance)
-        UC5(Real-time Chat)
-        UC6(Receive Alerts & Notifications)
-        UC7(Manage Users & System)
-    end
-
-    Student --> UC1
-    Student --> UC2
-    Student --> UC5
-    Student --> UC6
-
-    Mentor --> UC1
-    Mentor --> UC3
-    Mentor --> UC4
-    Mentor --> UC5
-
-    Admin --> UC1
-    Admin --> UC7
-```
-
-## 3. Data Flow Diagrams (DFD)
-
-### Level 0 (Context Diagram)
-```mermaid
-flowchart TD
-    S[Student] <-->|Profile, Grades, Attendance, Alerts| USIS((USIS System))
-    M[Mentor] <-->|Attendance Entry, Marks Entry, Chat| USIS
-    A[Admin] <-->|User Management, System Config, Reports| USIS
-```
-
-### Level 1
-```mermaid
-flowchart TD
-    S[Student] -->|Credentials| P1((1. Auth))
-    P1 -->|JWT Token| S
-    
-    M[Mentor] -->|Attendance Data| P2((2. Attendance Module))
-    P2 -->|Record| DB[(Database)]
-    
-    DB -->|Status Check| P3((3. Alert Engine))
-    P3 -->|Low Attendance Alert| S
-    
-    M -->|Marks| P4((4. Grade Module))
-    P4 --> DB
-    
-    S <-->|Messages| P5((5. Chat System))
-    P5 <-->|Messages| M
-```
-
-### Level 2 (Attendance & Alert Sub-process)
-```mermaid
-flowchart TD
-    P2_1((Fetch Roster)) --> |Students| M[Mentor]
-    M --> |Submit Status| P2_2((Save Attendance))
-    P2_2 --> |Write| DB[(DB)]
-    
-    DB --> |Read %| P3_1((Calculate Overall %))
-    P3_1 --> P3_2{Is % < 75?}
-    P3_2 -- Yes --> P3_3((Generate Warning))
-    P3_2 -- No --> P3_4((No Action))
-    
-    P3_3 --> |Save Alert| DB
-    P3_3 --> |Emit Event| WS((WebSockets))
-    WS --> |Push Notification| S[Student]
-```
-
-## 4. UML Class Diagram
-```mermaid
-classDiagram
-    class User {
-        +String _id
-        +String name
-        +String email
-        +String password
-        +String role
-        +login()
-        +logout()
-    }
-    class Student {
-        +String enrollmentId
-        +String mentorId
-        +getAttendance()
-        +getGrades()
-    }
-    class Mentor {
-        +String department
-        +markAttendance()
-        +enterGrades()
-    }
-    class AlertEngine {
-        +checkAttendanceThreshold()
-        +checkGradeThreshold()
-        +triggerNotification()
-    }
-    
-    User <|-- Student
-    User <|-- Mentor
-    AlertEngine ..> Student : "monitors"
-```
-
-## 5. Sequence Diagram (Authentication & Dashboard)
-```mermaid
-sequenceDiagram
-    participant S as Student
-    participant UI as React Frontend
-    participant API as Express API
-    participant DB as MongoDB
-    
-    S->>UI: Enter Email & Password
-    UI->>API: POST /api/auth/login
-    API->>DB: Find User & Verify Password
-    DB-->>API: User Data
-    API-->>UI: 200 OK + JWT Token
-    UI->>UI: Save Token & Redirect
-    
-    UI->>API: GET /api/student/dashboard (Auth Header)
-    API->>DB: Aggregate Attendance & Grades
-    DB-->>API: Data Array
-    API-->>UI: JSON Payload
-    UI-->>S: Render Recharts & Profile
-```
-
-## 6. Activity Diagram (Marking Attendance)
-```mermaid
-stateDiagram-v2
-    [*] --> SelectCourse
-    SelectCourse --> FetchStudents
-    FetchStudents --> MarkPresentAbsent
-    MarkPresentAbsent --> Submit
-    Submit --> SaveToDatabase
-    SaveToDatabase --> TriggerAlertEngine
-    
-    state TriggerAlertEngine {
-        [*] --> CheckPercentage
-        CheckPercentage --> LessThan75 : if < 75%
-        CheckPercentage --> OK : if >= 75%
-        LessThan75 --> CreateNotification
-        CreateNotification --> [*]
-        OK --> [*]
-    }
-    
-    TriggerAlertEngine --> [*]
-```
+## 📐 System Architecture & Diagrams
+Detailed system architecture, including Data Flow Diagrams (DFD), Entity-Relationship (ER) diagrams, and Use Case diagrams, can be found in the `docs/system_design.md` file.
