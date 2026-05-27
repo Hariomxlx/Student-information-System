@@ -5,6 +5,9 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import DashboardLayout from './pages/DashboardLayout';
 import Dashboard from './pages/Dashboard';
+import Chat from './pages/Chat';
+import Calendar from './pages/Calendar';
+import Academics from './pages/Academics';
 
 function App() {
   return (
@@ -17,6 +20,9 @@ function App() {
         {/* Protected Dashboard Routes */}
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Dashboard />} />
+          <Route path="chat" element={<Chat />} />
+          <Route path="calendar" element={<Calendar />} />
+          <Route path="academics" element={<Academics />} />
           {/* Add more nested routes for Academics, Chat, etc. */}
           <Route path="*" element={<div>Module Under Construction</div>} />
         </Route>

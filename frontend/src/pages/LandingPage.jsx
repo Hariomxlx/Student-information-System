@@ -9,7 +9,7 @@ const LandingPage = () => {
       <nav className="container mx-auto px-6 py-4 flex justify-between items-center border-b border-slate-800">
         <div className="flex items-center gap-2">
           <GraduationCap className="h-8 w-8 text-primary-500" />
-          <span className="text-xl font-bold tracking-tight">Welcome to Hariom & Himal Portol</span>
+          <span className="text-xl font-bold tracking-tight">Welcome to Hariom & Himal Portal</span>
         </div>
         <div className="flex gap-4">
           <Link to="/login" className="px-5 py-2 rounded-full font-medium text-slate-300 hover:text-white transition-colors">Login</Link>

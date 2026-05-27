@@ -35,7 +35,7 @@ const Register = () => {
         <div className="flex flex-col items-center mb-8">
           <GraduationCap className="h-12 w-12 text-primary-500 mb-4" />
           <h2 className="text-3xl font-bold text-white">Create Account</h2>
-          <p className="text-slate-400 mt-2">Join the Hariom & Himal Portol today</p>
+          <p className="text-slate-400 mt-2">Join the Hariom & Himal Portal today</p>
         </div>
 
         {error && <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg mb-6">{error}</div>}

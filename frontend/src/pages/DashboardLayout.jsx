@@ -1,5 +1,5 @@
 import React from 'react';
-import { useNavigate, Outlet } from 'react-router-dom';
+import { useNavigate, Outlet, Navigate } from 'react-router-dom';
 import { Home, Users, BookOpen, Calendar, MessageSquare, Bell, LogOut } from 'lucide-react';
 
 const DashboardLayout = () => {
@@ -13,8 +13,7 @@ const DashboardLayout = () => {
   };
 
   if (!user.token) {
-    navigate('/login');
-    return null;
+    return <Navigate to="/login" replace />;
   }
 
   const navItems = [
@@ -37,11 +36,11 @@ const DashboardLayout = () => {
             <span className="font-bold text-xl">H</span>
           </div>
           <div>
-            <h2 className="font-bold text-md leading-tight">Hariom & Himal Portol</h2>
+            <h2 className="font-bold text-md leading-tight">Hariom &amp; Himal Portal</h2>
             <p className="text-xs text-slate-400 capitalize">{user.role} Portal</p>
           </div>
         </div>
-        
+
         <nav className="flex-1 p-4 space-y-2">
           {navItems.map((item, idx) => (
             <button key={idx} onClick={() => navigate(item.path)} className="w-full flex items-center gap-3 px-4 py-3 rounded-xl text-slate-400 hover:bg-slate-700/50 hover:text-white transition-colors">
@@ -50,7 +49,7 @@ const DashboardLayout = () => {
             </button>
           ))}
         </nav>
-        
+
         <div className="p-4 border-t border-slate-700">
           <div className="flex items-center gap-3 mb-4 px-2">
             <div className="h-10 w-10 rounded-full bg-slate-700 border-2 border-slate-600 overflow-hidden">
