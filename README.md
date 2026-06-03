@@ -58,3 +58,4 @@ npm run dev
 
 ## 📐 System Architecture & Diagrams
 Detailed system architecture, including Data Flow Diagrams (DFD), Entity-Relationship (ER) diagrams, and Use Case diagrams, can be found in the `docs/system_design.md` file.
+
