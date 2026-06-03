@@ -11,18 +11,31 @@ const generateToken = (id, role) => {
 };
 
 // @route   POST /api/auth/register
-// @desc    Register a new user (Mocked for Demo)
+// @desc    Register a new user
 // @access  Public
 router.post('/register', async (req, res) => {
-  const { name, email, password, role } = req.body;
+  const { name, email, password, role, enrollmentId, department } = req.body;
   try {
-    // Mock user creation
-    res.status(201).json({
-      _id: 'mock_user_123',
-      name: name || 'Demo User',
-      email: email || 'demo@usis.edu',
+    const userExists = await User.findOne({ email });
+    if (userExists) {
+      return res.status(400).json({ message: 'User already exists' });
+    }
+
+    const user = await User.create({
+      name,
+      email,
+      password,
       role: role || 'student',
-      token: generateToken('mock_user_123', role || 'student'),
+      enrollmentId,
+      department
+    });
+
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      token: generateToken(user._id, user.role),
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -30,18 +43,56 @@ router.post('/register', async (req, res) => {
 });
 
 // @route   POST /api/auth/login
-// @desc    Authenticate user & get token (Mocked for Demo)
+// @desc    Authenticate user & get token
 // @access  Public
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
   try {
-    // Mock user login
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(401).json({ message: 'Incorrect email. Please enter a valid registered email.' });
+    }
+
+    const isMatch = await user.matchPassword(password);
+    if (!isMatch) {
+      return res.status(401).json({ message: 'Incorrect password. Please enter the correct password.' });
+    }
+
     res.json({
-      _id: 'mock_user_123',
-      name: 'Demo User',
-      email: email || 'demo@usis.edu',
-      role: 'student',
-      token: generateToken('mock_user_123', 'student'),
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      role: user.role,
+      token: generateToken(user._id, user.role),
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// @route   POST /api/auth/admin-login
+// @desc    Authenticate administration login with unique ID/password
+// @access  Public
+router.post('/admin-login', async (req, res) => {
+  const { adminId, password } = req.body;
+  try {
+    const targetId = process.env.ADMIN_ID || 'admin_usis';
+    const targetPassword = process.env.ADMIN_PASSWORD || 'admin_pass_987';
+
+    if (adminId !== targetId) {
+      return res.status(401).json({ message: 'Incorrect Admin Security ID. Please enter the correct ID.' });
+    }
+
+    if (password !== targetPassword) {
+      return res.status(401).json({ message: 'Incorrect Master Access Password. Please enter the correct password.' });
+    }
+
+    res.json({
+      _id: 'admin_master_123',
+      name: 'System Administrator',
+      email: 'admin@usis.edu',
+      role: 'admin',
+      token: generateToken('admin_master_123', 'admin'),
     });
   } catch (error) {
     res.status(500).json({ message: error.message });

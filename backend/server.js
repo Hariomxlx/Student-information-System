@@ -21,11 +21,55 @@ app.use(express.json());
 // Routes
 const authRoutes = require('./routes/authRoutes');
 const apiRoutes = require('./routes/apiRoutes');
+const grievanceRoutes = require('./routes/grievanceRoutes');
+const adminRoutes = require('./routes/adminRoutes');
 app.use('/api/auth', authRoutes);
 app.use('/api/core', apiRoutes);
+app.use('/api/grievances', grievanceRoutes);
+app.use('/api/admin', adminRoutes);
 
 // Database connection
 const { MongoMemoryServer } = require('mongodb-memory-server');
+const User = require('./models/User');
+
+const seedDB = async () => {
+  try {
+    const userCount = await User.countDocuments();
+    if (userCount === 0) {
+      console.log('Seeding default users...');
+      
+      // Create student
+      await User.create({
+        name: 'Jane Doe (Student)',
+        email: 'student@usis.edu',
+        password: 'password123',
+        role: 'student',
+        enrollmentId: 'STU2026001'
+      });
+
+      // Create mentor
+      await User.create({
+        name: 'Dr. John Smith (Mentor)',
+        email: 'mentor@usis.edu',
+        password: 'password123',
+        role: 'mentor',
+        department: 'Computer Science'
+      });
+
+      // Create admin
+      await User.create({
+        name: 'System Administrator',
+        email: 'admin@usis.edu',
+        password: 'password123',
+        role: 'admin'
+      });
+
+      console.log('Database seeded successfully!');
+    }
+  } catch (err) {
+    console.error('Error seeding database:', err);
+  }
+};
 
 const connectDB = async () => {
   try {
@@ -37,6 +81,7 @@ const connectDB = async () => {
     }
     await mongoose.connect(uri);
     console.log('MongoDB connected');
+    await seedDB();
   } catch (error) {
     console.error('MongoDB connection error:', error);
   }

@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const Attendance = require('../models/Attendance');
 const Grade = require('../models/Grade');
+const User = require('../models/User');
 const { protect, authorize } = require('../middleware/auth');
 
 // @route   POST /api/attendance
@@ -49,6 +50,18 @@ router.post('/grades', protect, authorize('mentor', 'admin'), async (req, res) =
       maxMarks
     });
     res.status(201).json(grade);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// @route   GET /api/core/students
+// @desc    Get all students
+// @access  Private (Mentor/Admin)
+router.get('/students', protect, authorize('mentor', 'admin'), async (req, res) => {
+  try {
+    const students = await User.find({ role: 'student' }).select('name email enrollmentId');
+    res.json(students);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

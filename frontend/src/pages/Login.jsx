@@ -21,7 +21,14 @@ const Login = () => {
       if (res.ok) {
         localStorage.setItem('usis_token', data.token);
         localStorage.setItem('usis_user', JSON.stringify(data));
-        navigate('/dashboard');
+        
+        if (data.role === 'admin') {
+          navigate('/administration');
+        } else if (data.role === 'mentor') {
+          navigate('/mentor');
+        } else {
+          navigate('/dashboard');
+        }
       } else {
         setError(data.message || 'Login failed');
       }
