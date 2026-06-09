@@ -1,61 +1,214 @@
-# Unified Student Information System (USIS)
+# 🎓 University Student Information System (USIS)
 
-USIS is a modern, full-stack educational management web application designed to centralize and streamline student data. Built with a sleek, dark-mode glassmorphism aesthetic, USIS provides students and mentors with an intuitive portal for tracking attendance, managing grades, and facilitating real-time communication.
+A comprehensive web-based platform designed to streamline academic and administrative processes within a university environment. The system provides role-based access for Students, Mentors, and Administrators, enabling efficient management of academic records, attendance, grievances, communication, and more.
 
-## 🌟 Features
+## 🚀 Live Demo
 
-- **Professional Dashboard:** Interactive analytics using Recharts to visualize attendance and academic performance.
-- **Academic Tracking:** Monitor current courses, GPA trends, completed credits, and class rankings.
-- **Real-Time Chat Engine:** Instant messaging between students and mentors utilizing WebSockets (Socket.io).
-- **Interactive Calendar:** Manage schedules, upcoming exams, assignment deadlines, and mentor meetings.
-- **Smart Alert System:** Automated push notifications and alerts triggered when attendance drops below the 75% threshold.
-- **Secure Authentication:** JWT-based login and registration system with role-based access control (Student, Mentor, Admin).
-- **Premium UI/UX:** Fully responsive interface built with Tailwind CSS, featuring glassmorphism elements, neon accents, and smooth micro-animations.
+### Frontend
 
-## 🛠️ Technology Stack
+https://student-information-system-inky.vercel.app
 
-**Frontend:**
-- React (Vite)
-- Tailwind CSS
-- React Router v6
-- Recharts (Data Visualization)
-- Lucide React (Icons)
-- Socket.io-client
+### Backend API
 
-**Backend:**
-- Node.js & Express
-- MongoDB (In-Memory Server for Demo)
-- Mongoose
-- Socket.io (WebSockets)
-- JSON Web Token (JWT)
+https://student-information-system-1-hmtf.onrender.com
 
-## 🚀 Getting Started
+---
 
-### Prerequisites
-Make sure you have [Node.js](https://nodejs.org/) installed on your machine.
+## 📌 Features
 
-### 1. Backend Setup
-Navigate to the backend directory and start the server:
+### 👨‍🎓 Student Portal
+
+* Student Dashboard
+* Attendance Tracking
+* Grade Management
+* Grievance Submission
+* Real-Time Chat System
+* Academic Performance Monitoring
+
+### 👨‍🏫 Mentor Portal
+
+* Student Progress Monitoring
+* Attendance Management
+* Grade Assignment & Updates
+* Grievance Resolution
+* Student Communication
+
+### 👨‍💼 Administrator Portal
+
+* User Management
+* System Administration
+* Academic Record Management
+* Grievance Oversight
+* Real-Time Notifications
+
+### 💬 Real-Time Features
+
+* Socket.IO Integration
+* Instant Messaging
+* Live Notifications
+* Real-Time Updates
+
+---
+
+## 🛠️ Tech Stack
+
+### Frontend
+
+* React.js
+* Vite
+* React Router DOM
+* Tailwind CSS
+* Lucide React Icons
+* Socket.IO Client
+
+### Backend
+
+* Node.js
+* Express.js
+* Socket.IO
+* JWT Authentication
+* MongoDB / MongoDB Memory Server
+
+### Deployment
+
+* Frontend: Vercel
+* Backend: Render
+
+---
+
+## 📂 Project Structure
+
+```bash
+Student-Information-System/
+│
+├── frontend/
+│   ├── src/
+│   ├── public/
+│   ├── package.json
+│   └── vite.config.js
+│
+├── backend/
+│   ├── models/
+│   ├── routes/
+│   ├── controllers/
+│   ├── middleware/
+│   ├── server.js
+│   └── package.json
+│
+└── README.md
+```
+
+## ⚙️ Installation
+
+### Clone Repository
+
+```bash
+git clone https://github.com/Hariomxlx/Student-information-System.git
+cd Student-information-System
+```
+
+### Backend Setup
+
 ```bash
 cd backend
 npm install
-npm run dev
+npm start
 ```
-*Note: The backend automatically spins up an in-memory MongoDB instance, so no local database setup is required.*
 
-### 2. Frontend Setup
-Open a new terminal window, navigate to the frontend directory, and start the Vite dev server:
+### Frontend Setup
+
 ```bash
 cd frontend
 npm install
 npm run dev
 ```
 
-### 3. Usage
-- Open your browser and navigate to `http://localhost:5173`
-- Use the **Login** page to sign in as a student or mentor.
-- Explore the **Dashboard**, **Academics**, **Calendar**, and **Messages** modules.
+---
 
-## 📐 System Architecture & Diagrams
-Detailed system architecture, including Data Flow Diagrams (DFD), Entity-Relationship (ER) diagrams, and Use Case diagrams, can be found in the `docs/system_design.md` file.
+## 🔑 Default Demo Credentials
 
+### Student
+
+```text
+Email: student@usis.edu
+Password: password123
+```
+
+### Mentor
+
+```text
+Email: mentor@usis.edu
+Password: password123
+```
+
+### Administrator
+
+```text
+Email: admin@usis.edu
+Password: password123
+```
+
+---
+
+## 🌐 Environment Variables
+
+### Frontend (.env)
+
+```env
+VITE_API_URL=https://student-information-system-1-hmtf.onrender.com
+```
+
+### Backend (.env)
+
+```env
+PORT=5000
+JWT_SECRET=your_secret_key
+MONGODB_URI=your_mongodb_connection_string
+```
+
+---
+
+## 📸 Screenshots
+
+Add screenshots of:
+
+* Login Page
+* Student Dashboard
+* Mentor Dashboard
+* Admin Dashboard
+* Grievance System
+* Chat Module
+
+---
+
+## 🔒 Authentication
+
+* JWT-Based Authentication
+* Role-Based Access Control
+* Protected Routes
+* Secure API Endpoints
+
+---
+
+## 🚀 Future Enhancements
+
+* Email Notifications
+* AI-Based Student Analytics
+* Mobile Application
+* Document Upload System
+* Advanced Reporting Dashboard
+* Cloud Database Integration
+
+---
+
+## 👨‍💻 Developed By
+
+**Hariom Kumar**
+
+GitHub: https://github.com/Hariomxlx
+
+---
+
+## 📜 License
+
+This project is developed for educational and academic purposes.
