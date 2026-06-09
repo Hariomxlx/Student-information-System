@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Send, User, Search, Phone, Video, MoreVertical } from 'lucide-react';
 import io from 'socket.io-client';
 
-const socket = io(import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000');
+const socket = io(import.meta.env.VITE_BACKEND_URL || `http://${import.meta.env.VITE_API_URL}`);
 
 const Chat = () => {
   const user = JSON.parse(localStorage.getItem('usis_user') || '{}');

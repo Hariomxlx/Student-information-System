@@ -16,7 +16,7 @@ const MentorDashboard = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/core/students', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/core/students`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -31,7 +31,7 @@ const MentorDashboard = () => {
 
   const fetchGrievanceStats = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/grievances', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/grievances`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {

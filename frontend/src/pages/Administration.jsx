@@ -56,7 +56,7 @@ const Administration = () => {
 
   const fetchStats = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/stats', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/stats`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -70,7 +70,7 @@ const Administration = () => {
 
   const fetchUsers = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/admin/users', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/users`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -84,7 +84,7 @@ const Administration = () => {
 
   const fetchGrievances = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/grievances', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/grievances`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -103,7 +103,7 @@ const Administration = () => {
     setSuccess('');
 
     try {
-      const res = await fetch('http://localhost:5000/api/admin/users', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/users`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -142,7 +142,7 @@ const Administration = () => {
     }
 
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/users/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/users/${id}`, {
         method: 'DELETE',
         headers: { 'Authorization': `Bearer ${token}` }
       });
@@ -167,7 +167,7 @@ const Administration = () => {
     setSuccess('');
 
     try {
-      const res = await fetch(`http://localhost:5000/api/admin/grievances/${selectedGrievance._id}`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/grievances/${selectedGrievance._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

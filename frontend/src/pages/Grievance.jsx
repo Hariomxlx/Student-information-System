@@ -21,7 +21,7 @@ const Grievance = () => {
 
   const fetchGrievances = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/grievances', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/grievances`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -41,7 +41,7 @@ const Grievance = () => {
     setError('');
     
     try {
-      const res = await fetch('http://localhost:5000/api/grievances', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/grievances`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

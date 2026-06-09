@@ -22,7 +22,7 @@ const MentorAttendance = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/core/students', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/core/students`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -44,7 +44,7 @@ const MentorAttendance = () => {
     setSuccess('');
 
     try {
-      const res = await fetch('http://localhost:5000/api/core/attendance', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/core/attendance`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

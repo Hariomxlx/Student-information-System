@@ -23,7 +23,7 @@ const MentorGrievances = () => {
 
   const fetchGrievances = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/grievances', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/grievances`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -44,7 +44,7 @@ const MentorGrievances = () => {
 
     try {
       // In the backend routes, mentors update grievances using PUT /api/grievances/:id/status
-      const res = await fetch(`http://localhost:5000/api/grievances/${selectedGrievance._id}/status`, {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/grievances/${selectedGrievance._id}/status`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

@@ -22,7 +22,7 @@ const MentorGrades = () => {
 
   const fetchStudents = async () => {
     try {
-      const res = await fetch('http://localhost:5000/api/core/students', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/core/students`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       if (res.ok) {
@@ -51,7 +51,7 @@ const MentorGrades = () => {
     }
 
     try {
-      const res = await fetch('http://localhost:5000/api/core/grades', {
+      const res = await fetch(`${import.meta.env.VITE_API_URL}/api/core/grades`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
